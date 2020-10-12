@@ -34,7 +34,10 @@
     "ios",
     "android"
   ],
-  "repository": "https://github.com/arpansharma7474/rn-sms-retriever",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/arpansharma7474/rn-sms-retriever.git"
+  },
   "author": "Arpan Sharma <arpansharma7474@gmail.com> (https://github.com/arpansharma7474)",
   "license": "MIT",
   "bugs": {
@@ -138,5 +141,10 @@
       "module",
       "typescript"
     ]
-  }
+  },
+  "directories": {
+    "example": "example",
+    "lib": "lib"
+  },
+  "dependencies": {}
 }
