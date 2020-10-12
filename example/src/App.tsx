@@ -1,17 +1,31 @@
 import * as React from 'react';
-import { StyleSheet, View, Text } from 'react-native';
+import { StyleSheet, View, Text, DeviceEventEmitter } from 'react-native';
 import RnSmsRetriever from 'rn-sms-retriever';
 
 export default function App() {
-  const [result, setResult] = React.useState<number | undefined>();
+
+  const SMS_EVENT = "me.furtado.smsretriever:SmsEvent"
 
   React.useEffect(() => {
-    RnSmsRetriever.multiply(3, 7).then(setResult);
+    let res = undefined
+    async function innerAsync() {
+      // const res = await RnSmsRetriever.requestPhoneNumber();
+      res = DeviceEventEmitter.addListener(SMS_EVENT, (data: any) => {
+        console.log(data, "SMS value")
+      })
+      const res2 = await RnSmsRetriever.startSmsRetriever();
+      console.log(res2, "res")
+    }
+    innerAsync()
+    return () => {
+      if (res)
+        res.remove()
+    }
   }, []);
 
   return (
     <View style={styles.container}>
-      <Text>Result: {result}</Text>
+
     </View>
   );
 }
