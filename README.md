@@ -1,6 +1,6 @@
 # rn-sms-retriever
 
-React Native implementation of Android SMS Retriever
+React Native implementation of Android SMS Retriever. No READ_SMS permisssion is required now, instead we have to use [SMS retriever](https://developers.google.com/identity/sms-retriever/overview).
 
 ## Installation
 
