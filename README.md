@@ -18,18 +18,21 @@ export default function App() {
   const SMS_EVENT = "me.furtado.smsretriever:SmsEvent"
 
   React.useEffect(() => {
-    let smsListener = undefined
+    let smsListener : undefined | EmitterSubscription
     async function innerAsync() {
-      const phoneNumberRes = await RnSmsRetriever.requestPhoneNumber();
+      // get list of available phone numbers
+      await RnSmsRetriever.requestPhoneNumber();
+      // set Up SMS Listener 
       smsListener = DeviceEventEmitter.addListener(SMS_EVENT, (data: any) => {
         console.log(data, "SMS value")
       })
-      const smsListener = await RnSmsRetriever.startSmsRetriever();
+      // start Retriever
+      await RnSmsRetriever.startSmsRetriever();
     }
     innerAsync()
     return () => {
-      if (smsListener)
-        smsListener.remove()
+      // remove the listsner on unmount
+        smsListener?.remove()
     }
   }, []);
 
