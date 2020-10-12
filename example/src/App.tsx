@@ -1,35 +1,35 @@
 import * as React from 'react';
-import { StyleSheet, View, DeviceEventEmitter, EmitterSubscription } from 'react-native';
+import {
+  StyleSheet,
+  View,
+  DeviceEventEmitter,
+  EmitterSubscription,
+} from 'react-native';
 import RnSmsRetriever from 'rn-sms-retriever';
 
 export default function App() {
-
-  const SMS_EVENT = "me.furtado.smsretriever:SmsEvent"
+  const SMS_EVENT = 'me.furtado.smsretriever:SmsEvent';
 
   React.useEffect(() => {
-    let smsListener: undefined | EmitterSubscription
+    let smsListener: undefined | EmitterSubscription;
     async function innerAsync() {
       // get list of available phone numbers
       await RnSmsRetriever.requestPhoneNumber();
-      // set Up SMS Listener 
+      // set Up SMS Listener;
       smsListener = DeviceEventEmitter.addListener(SMS_EVENT, (data: any) => {
-        console.log(data, "SMS value")
-      })
-      // start Retriever
+        console.log(data, 'SMS value');
+      });
+      // start Retriever;
       await RnSmsRetriever.startSmsRetriever();
     }
-    innerAsync()
+    innerAsync();
     return () => {
       // remove the listsner on unmount
-      smsListener?.remove()
-    }
+      smsListener?.remove();
+    };
   }, []);
 
-  return (
-    <View style={styles.container}>
-
-    </View>
-  );
+  return <View style={styles.container} />;
 }
 
 const styles = StyleSheet.create({
