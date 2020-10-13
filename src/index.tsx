@@ -4,6 +4,7 @@ type RnSmsRetrieverType = {
   multiply(a: number, b: number): Promise<number>;
   requestPhoneNumber(): Promise<boolean>;
   startSmsRetriever(): Promise<boolean>;
+  getAppHash(): Promise<string>;
 };
 
 const { RnSmsRetriever } = NativeModules;

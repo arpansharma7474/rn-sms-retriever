@@ -1,5 +1,6 @@
 package com.rnsmsretriever
 
+import android.content.pm.PackageManager.NameNotFoundException
 import com.facebook.react.bridge.*
 
 
@@ -27,10 +28,17 @@ class RnSmsRetrieverModule(reactContext: ReactApplicationContext) : ReactContext
   @ReactMethod
   fun startSmsRetriever(promise: Promise?) {
     mSmsHelper.startRetriever(promise)
-//    val a = AppSignatureHelper(reactApplicationContext)
-//    val signature = a.appSignatures
-//    for (i in signature)
-//      Log.e("Signature", i)
+  }
+
+  @ReactMethod
+  fun getAppHash(promise: Promise?) {
+    try {
+      val a = AppSignatureHelper(reactApplicationContext)
+      val signature = a.appSignatures
+      promise?.resolve(signature[0])
+    } catch (e: NameNotFoundException) {
+      promise?.reject(e)
+    }
   }
 
   @ReactMethod

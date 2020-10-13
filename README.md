@@ -2,6 +2,8 @@
 
 React Native implementation of Android SMS Retriever. No READ_SMS permisssion is required now, instead we have to use [SMS retriever](https://developers.google.com/identity/sms-retriever/overview).
 
+For better understanding, please refer this [article](https://medium.com/android-dev-hacks/autofill-otp-verification-with-latest-sms-retriever-api-73c788636783). 
+
 ## Installation
 
 ```sh
@@ -25,6 +27,7 @@ export default function App() {
       // set Up SMS Listener;
       smsListener = DeviceEventEmitter.addListener(SMS_EVENT, (data: any) => {
         console.log(data, 'SMS value');
+        // Handle your message here.
       });
       // start Retriever;
       await RnSmsRetriever.startSmsRetriever();
