@@ -1,6 +1,6 @@
 {
   "name": "rn-sms-retriever",
-  "version": "0.1.0",
+  "version": "1.0.0",
   "description": "React Native implementation of Android SMS Retriever",
   "main": "lib/commonjs/index",
   "module": "lib/module/index",
