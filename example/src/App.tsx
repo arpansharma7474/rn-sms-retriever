@@ -15,7 +15,8 @@ export default function App() {
     let smsListener: undefined | EmitterSubscription;
     async function innerAsync() {
       // get list of available phone numbers
-      await RnSmsRetriever.requestPhoneNumber();
+      const selectedPhone = await RnSmsRetriever.requestPhoneNumber();
+      console.log('Selected Phone is : ' + selectedPhone);
       // get App Hash
       const hash = await RnSmsRetriever.getAppHash();
       console.log('Your App Hash is : ' + hash);
