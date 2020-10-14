@@ -6,11 +6,9 @@ import {
   EmitterSubscription,
   Platform,
 } from 'react-native';
-import RnSmsRetriever from 'rn-sms-retriever';
+import RnSmsRetriever, { SMS_EVENT } from 'rn-sms-retriever';
 
 export default function App() {
-  const SMS_EVENT = 'me.furtado.smsretriever:SmsEvent';
-
   React.useEffect(() => {
     let smsListener: undefined | EmitterSubscription;
     async function innerAsync() {

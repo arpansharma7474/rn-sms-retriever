@@ -17,8 +17,6 @@ import RnSmsRetriever from "rn-sms-retriever";
 
 export default function App() {
 
-  const SMS_EVENT = "me.furtado.smsretriever:SmsEvent"
-
   React.useEffect(() => {
     let smsListener: undefined | EmitterSubscription;
     async function innerAsync() {
@@ -29,7 +27,7 @@ export default function App() {
       const hash = await RnSmsRetriever.getAppHash();
       console.log('Your App Hash is : ' + hash);
       // set Up SMS Listener;
-      smsListener = DeviceEventEmitter.addListener(SMS_EVENT, (data: any) => {
+      smsListener = DeviceEventEmitter.addListener(RnSmsRetriever.SMS_EVENT, (data: any) => {
         console.log(data, 'SMS value');
       });
       // start Retriever;

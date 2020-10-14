@@ -2,6 +2,7 @@ package com.rnsmsretriever
 
 import android.content.pm.PackageManager.NameNotFoundException
 import com.facebook.react.bridge.*
+import java.util.*
 
 
 class RnSmsRetrieverModule(reactContext: ReactApplicationContext) : ReactContextBaseJavaModule(reactContext) {
@@ -16,6 +17,12 @@ class RnSmsRetrieverModule(reactContext: ReactApplicationContext) : ReactContext
 
   override fun getName(): String {
     return "RnSmsRetriever"
+  }
+
+  override fun getConstants(): MutableMap<String, Any> {
+    val constants: MutableMap<String, Any> = HashMap()
+    constants["SMS_EVENT"] = "me.furtado.smsretriever:SmsEvent"
+    return constants
   }
 
   // Example method
