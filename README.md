@@ -24,15 +24,19 @@ export default function App() {
     async function innerAsync() {
       // get list of available phone numbers
       await RnSmsRetriever.requestPhoneNumber();
+      // get App Hash
+      const hash = await RnSmsRetriever.getAppHash();
+      console.log('Your App Hash is : ' + hash);
       // set Up SMS Listener;
       smsListener = DeviceEventEmitter.addListener(SMS_EVENT, (data: any) => {
         console.log(data, 'SMS value');
-        // Handle your message here.
       });
       // start Retriever;
       await RnSmsRetriever.startSmsRetriever();
     }
-    innerAsync();
+    // only to be used with Android
+    if (Platform.OS == "android")
+      innerAsync();
     return () => {
       // remove the listsner on unmount
       smsListener?.remove();

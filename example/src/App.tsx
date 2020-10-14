@@ -4,6 +4,7 @@ import {
   View,
   DeviceEventEmitter,
   EmitterSubscription,
+  Platform,
 } from 'react-native';
 import RnSmsRetriever from 'rn-sms-retriever';
 
@@ -25,7 +26,8 @@ export default function App() {
       // start Retriever;
       await RnSmsRetriever.startSmsRetriever();
     }
-    innerAsync();
+    // only to be used with Android
+    if (Platform.OS === 'android') innerAsync();
     return () => {
       // remove the listsner on unmount
       smsListener?.remove();
