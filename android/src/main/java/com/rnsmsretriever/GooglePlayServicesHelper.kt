@@ -2,6 +2,7 @@ package com.rnsmsretriever
 
 import android.content.Context
 import android.content.pm.PackageManager.NameNotFoundException
+import androidx.core.content.pm.PackageInfoCompat
 import com.google.android.gms.common.ConnectionResult
 import com.google.android.gms.common.GoogleApiAvailability
 
@@ -21,7 +22,7 @@ internal object GooglePlayServicesHelper {
   fun hasSupportedVersion(context: Context): Boolean {
     val manager = context.packageManager
     return try {
-      val version = manager.getPackageInfo(GoogleApiAvailability.GOOGLE_PLAY_SERVICES_PACKAGE, 0).longVersionCode
+      val version = PackageInfoCompat.getLongVersionCode(manager.getPackageInfo(GoogleApiAvailability.GOOGLE_PLAY_SERVICES_PACKAGE, 0))
       version >= MINIMAL_VERSION
     } catch (e: NameNotFoundException) {
       false
