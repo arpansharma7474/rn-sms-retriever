@@ -9,6 +9,6 @@ type RnSmsRetrieverType = {
 
 const { RnSmsRetriever } = NativeModules;
 
-export const SMS_EVENT = RnSmsRetriever.SMS_EVENT;
+export const SMS_EVENT = 'me.furtado.smsretriever:SmsEvent';
 
 export default RnSmsRetriever as RnSmsRetrieverType;
