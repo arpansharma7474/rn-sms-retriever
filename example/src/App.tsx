@@ -5,6 +5,7 @@ import {
   DeviceEventEmitter,
   EmitterSubscription,
   Platform,
+  Text,
 } from 'react-native';
 import RnSmsRetriever, { SMS_EVENT } from 'rn-sms-retriever';
 
@@ -33,7 +34,9 @@ export default function App() {
     };
   }, []);
 
-  return <View style={styles.container} />;
+  return <View style={styles.container} >
+    <Text>Listener Test</Text>
+  </View>;
 }
 
 const styles = StyleSheet.create({
