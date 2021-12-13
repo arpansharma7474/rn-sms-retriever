@@ -43,6 +43,8 @@ export default function App() {
   //....
 }
 ```
+## Release Key Hash
+If you face any issues with creating Release Key hash [follow these steps](https://stackoverflow.com/a/54880171/5954472)
 
 ## Contributing
 
