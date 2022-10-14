@@ -4,9 +4,9 @@ React Native implementation of Android SMS Retriever. No READ_SMS permisssion is
 
 For better understanding, please refer this [article](https://medium.com/android-dev-hacks/autofill-otp-verification-with-latest-sms-retriever-api-73c788636783).
 
-## Version 1.2.0 is here :)
+## Version 1.2.1 is here :)
 
-- Fixed - Explicitly set requiresMainQueueSetup flag to false. Thanks @andrewgrinko
+- Fixed - Warning -> Explicitly set requiresMainQueueSetup flag to false.
 - Updated implementation 'com.google.android.gms:play-services-auth:20.3.0'
 - Updated implementation 'com.google.android.gms:play-services-auth-api-phone:18.0.1'
 
