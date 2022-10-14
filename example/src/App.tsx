@@ -14,8 +14,12 @@ export default function App() {
     let smsListener: undefined | EmitterSubscription;
     async function innerAsync() {
       // get list of available phone numbers
-      const selectedPhone = await RnSmsRetriever.requestPhoneNumber();
-      console.log('Selected Phone is : ' + selectedPhone);
+      try {
+        const selectedPhone = await RnSmsRetriever.requestPhoneNumber();
+        console.log('Selected Phone is : ' + selectedPhone);
+      } catch (e) {
+        console.log('Get Phone error', e);
+      }
       // get App Hash
       const hash = await RnSmsRetriever.getAppHash();
       console.log('Your App Hash is : ' + hash);
@@ -34,9 +38,11 @@ export default function App() {
     };
   }, []);
 
-  return <View style={styles.container} >
-    <Text>Listener Test</Text>
-  </View>;
+  return (
+    <View style={styles.container}>
+      <Text>Listener Test</Text>
+    </View>
+  );
 }
 
 const styles = StyleSheet.create({
