@@ -2,6 +2,7 @@ package com.rnsmsretriever
 
 import android.content.BroadcastReceiver
 import android.content.IntentFilter
+import android.content.Context;
 import android.util.Log
 import com.facebook.react.bridge.Promise
 import com.facebook.react.bridge.ReactApplicationContext
@@ -37,7 +38,7 @@ class SMSHelper(private val mContext: ReactApplicationContext) {
     mReceiver = SmsBroadcastReceiver(mContext)
     val intentFilter = IntentFilter(SmsRetriever.SMS_RETRIEVED_ACTION)
     return try {
-      mContext.registerReceiver(mReceiver, intentFilter)
+      mContext.registerReceiver(mReceiver, intentFilter, Context.RECEIVER_EXPORTED)
       true
     } catch (e: Exception) {
       e.printStackTrace()
