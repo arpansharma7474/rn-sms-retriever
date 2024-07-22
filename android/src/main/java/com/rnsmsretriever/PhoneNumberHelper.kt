@@ -7,9 +7,8 @@ import android.content.IntentSender.SendIntentException
 import com.facebook.react.bridge.ActivityEventListener
 import com.facebook.react.bridge.BaseActivityEventListener
 import com.facebook.react.bridge.Promise
-import com.google.android.gms.auth.api.credentials.Credential
-import com.google.android.gms.auth.api.credentials.Credentials
-import com.google.android.gms.auth.api.credentials.HintRequest
+import com.google.android.gms.auth.api.identity.GetPhoneNumberHintIntentRequest
+import com.google.android.gms.auth.api.identity.Identity
 import com.rnsmsretriever.GooglePlayServicesHelper.hasSupportedVersion
 import com.rnsmsretriever.GooglePlayServicesHelper.isAvailable
 
@@ -43,15 +42,22 @@ class PhoneNumberHelper {
       callAndResetListener()
       return
     }
-    val hintRequest = HintRequest.Builder()
-      .setPhoneNumberIdentifierSupported(true)
-      .build()
-    val intent = Credentials.getClient(activity).getHintPickerIntent(hintRequest)
-    try {
-      activity.startIntentSenderForResult(intent.intentSender,
-        REQUEST_PHONE_NUMBER_REQUEST_CODE, null, 0, 0, 0)
-    } catch (e: SendIntentException) {
-      promiseReject(SEND_INTENT_ERROR_TYPE, SEND_INTENT_ERROR_MESSAGE)
+
+    val hintRequest = GetPhoneNumberHintIntentRequest.builder().build()
+    val intentTask = Identity.getSignInClient(activity).getPhoneNumberHintIntent(hintRequest)
+
+    intentTask.addOnSuccessListener { pendingIntent ->
+      try {
+        activity.startIntentSenderForResult(pendingIntent.intentSender,
+          REQUEST_PHONE_NUMBER_REQUEST_CODE, null, 0, 0, 0)
+      } catch (e: SendIntentException) {
+        promiseReject(SEND_INTENT_ERROR_TYPE, SEND_INTENT_ERROR_MESSAGE)
+        callAndResetListener()
+      }
+    }
+
+    intentTask.addOnFailureListener { e ->
+      promiseReject(SEND_INTENT_ERROR_TYPE, e.message ?: SEND_INTENT_ERROR_MESSAGE)
       callAndResetListener()
     }
   }
@@ -84,13 +90,12 @@ class PhoneNumberHelper {
     override fun onActivityResult(activity: Activity, requestCode: Int, resultCode: Int, data: Intent?) {
       super.onActivityResult(activity, requestCode, resultCode, data)
       if (requestCode == REQUEST_PHONE_NUMBER_REQUEST_CODE && resultCode == Activity.RESULT_OK && data != null) {
-        val credential: Credential? = data.getParcelableExtra(Credential.EXTRA_KEY)
-        if (credential == null) {
+        val phoneNumber = Identity.getSignInClient(activity).getPhoneNumberFromIntent(data)
+        if (phoneNumber == null) {
           promiseReject(ACTIVITY_RESULT_NOOK_ERROR_TYPE, ACTIVITY_RESULT_NOOK_ERROR_MESSAGE)
           callAndResetListener()
           return
         }
-        val phoneNumber = credential.id
         promiseResolve(phoneNumber)
         callAndResetListener()
         return
